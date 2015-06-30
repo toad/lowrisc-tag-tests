@@ -23,6 +23,8 @@ tag_tests = \
 	tag_ld_st \
 	parity \
 	memory_sweep \
+	tag_protection1 \
+	tag_protection2 \
 
 tag_tests_linux = $(addsuffix .linux, $(tag_tests))
 
