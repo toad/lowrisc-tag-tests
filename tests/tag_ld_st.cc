@@ -11,7 +11,7 @@ main() {
   long a[VECT_SIZE], i;
   
   for(i=0; i<VECT_SIZE; i++) {
-    *(a+i) = rand();
+    *(a+i) = rand() % (1 << TAG_WIDTH);
     store_tag((a+i), *(a+i));
   }
   
