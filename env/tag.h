@@ -1,7 +1,5 @@
 // See LICENSE for license details.
 
-//#include<asm/csr.h>
-
 #ifndef LOWRISC_TAG_H
 #define LOWRISC_TAG_H
 
