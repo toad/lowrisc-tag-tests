@@ -21,8 +21,6 @@ RISCV_LINUX_GCC_OPTS = -I.. -O3 -static -g -pthread
 #--------------------------------------------------------------------
 
 tag_tests = \
-	full_empty_spin \
-	full_empty_sched \
 	simple_full_empty
 
 tag_tests_linux = $(addsuffix .linux, $(tag_tests))
@@ -42,8 +40,11 @@ $(tag_tests_linux): %.linux:%.cc ../env/tag.h ../env/full_empty.h
 $(tag_tests_disass): %.txt:%
 	$(RISCV_OBJDUMP) -d  $< > $@
 
-$(tag_tests_disass_linux): %.txtlinux:%.linux
-	$(RISCV_OBJDUMP) -d $< > $@
+full_empty_spin.linux: full_empty.cc
+	$(RISCV_LINUX_GCC) $(RISCV_LINUX_GCC_OPTS) $< -o $@
+
+full_empty_sched.linux: full_empty.cc
+	$(RISCV_LINUX_GCC) $(RISCV_LINUX_GCC_OPTS) -DSCHEDUL $< -o $@
 
 all: $(tag_tests)
 
