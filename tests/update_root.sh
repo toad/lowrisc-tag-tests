@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# This script includes a binary (first argument)  into the linux image
+# $TOP/riscv-tools/busybox-1.21.1/root.bin
 if [ "$#" -le 0 ] 
 	then
 		echo "Please provide a program to load into the root image"
