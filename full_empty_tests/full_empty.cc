@@ -3,6 +3,7 @@
 #include<pthread.h>
 #include<sched.h>
 #include<env/full_empty.h>
+#include<errno.h>
 
 int workload = 1;
 
@@ -76,6 +77,7 @@ bool double_pipeline_test(int pipeline_length, int p_workload) {
 		}
 
 	for(i=0;i < pipeline_length-1; i++) {
+
 		ret = pthread_create(&thread, NULL, double_value,
 			 (void* )(pipeline+i));
 		if(ret) {
