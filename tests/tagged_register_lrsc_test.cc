@@ -33,7 +33,9 @@ bool check_sc(long *ptr) {
 	// 1. store tagged data conditionally
 	long initial_data = 0xBEEF;
 	char initial_tag = 2;
-	long tagged_register = tag_data(initial_data, initial_tag);
+	//long tagged_register = tag_data(initial_data, initial_tag);
+	long tagged_register = 32;
+	asm volatile ("wrt %0, %1, %2" : "=r"(tagged_register) : "r"(initial_data), "r"(initial_tag));
 	int fail = 32;
 	asm volatile ("sc.d %0, %1, (%2)" 
 			: "=r"(fail) : "r"(tagged_register), "r"(ptr) );
@@ -49,6 +51,7 @@ bool check_sc(long *ptr) {
 		printf("SC test: the tag was not preserved\n");
 		return false;
 	}
+	return true;
 }
 	
 
