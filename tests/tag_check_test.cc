@@ -1,4 +1,13 @@
-// See LICENSE for license details.
+/**
+ * Description: This tests the functionality of setting CSRs to define on which
+ * tag values a load and a store shall trap. That behaviour is then tested with
+ * the tag_check_and_load and tag_check_and_store library functions.
+ * Those library functions use the ldct and sdct assembly instructions that load/store
+ * a double word after checking its tag.
+ *
+ * Currently a load will cause two exceptions if both ldct and the regular ld instruction
+ * cause an exception.
+ */
 
 #include "env/tag.h"
 #include <stdio.h>
@@ -11,8 +20,9 @@ main() {
   long a[VECT_SIZE], i;
 
   //set the csr to define load tag behaviour
-  int load_csr = 0;			// trap on 00,01,10,11
-  int store_csr = 00;			// 0b1010 trap on tag 01, 11
+  int load_csr = 0b10;			// trap on 01
+  int store_csr = 0b1100;		// 0b1010 trap on tag 10, 11
+
   read_write_load_csr(load_csr);
   read_write_store_csr(store_csr);
   
@@ -29,12 +39,18 @@ main() {
     if((load_csr >> tag) & 1) 
 	printf("The next load should trap:\n");
     int payload = tag_check_and_load(location);
-    //printf("tag at %d is %d\n", i, tag);
+    printf("tag at %d is %d\n", i, tag);
 
     //now try to store to it with tag checks:
     if((store_csr >> tag) & 1)
 	printf("The next store should trap:\n");
     tag_check_and_store(location,a[i]);
   }
+
+  //clear the memory tags again!
+  for(i=0; i<VECT_SIZE;i++) {
+    store_tag((a+i), 0);
+  }
+
   printf("Tag load and store tests passed.\n");
 }

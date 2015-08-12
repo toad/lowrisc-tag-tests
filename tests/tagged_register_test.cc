@@ -1,4 +1,7 @@
-
+/**
+ * Description: This contains tests to test the tag propagation between
+ * memory and registers on various 64-bit wide memory accesses
+ */
 #include"env/tag.h"
 #include<stdio.h>
 #include<stdlib.h>

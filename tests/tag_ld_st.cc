@@ -1,4 +1,8 @@
-// See LICENSE for license details.
+/**
+ * Description: This tests the store_tag and load_tag library functions, which use the
+ * stag and ltag instructions to store and load tags into/from memory.
+ *
+ */
 
 #include "env/tag.h"
 #include <stdio.h>
