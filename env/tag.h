@@ -58,8 +58,13 @@ char tag;
 } tagged_data_t;
 
 inline void tag_and_store(void *addr, tagged_data_t tdata) {
-	asm volatile ("wrt  %0, %1, %2" : "=r"(tdata.data) : "r"(tdata.data), "r"(tdata.tag) );
-	asm volatile ("sd %0, 0(%1)" : : "r"(tdata.data), "r"(addr) );
+	asm volatile (	"wrt %0, %1, %2\n"
+			"sd %0, 0(%3)\n"
+			"wrt %0, %1, zero\n"
+			: "+r"(tdata.data)
+			: "r" (tdata.data), "r"(tdata.tag), "r"(addr) );
+	// also zero out the tag after you wrote it to prevent a
+	// stale tag messing with your stuff!
 }
 
 inline tagged_data_t load_tagged_data(void *addr) {
