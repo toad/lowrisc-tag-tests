@@ -1,6 +1,5 @@
-full_empty_spin.linux
-full_empty_spin.txt
-full_empty_sched.linux
-full_empty_sched.txt
+*.linux
+.txt
 simple_full_empty
-simple_full_empty.txt
+full_empty
+full_empty_spin
