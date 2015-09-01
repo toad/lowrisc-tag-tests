@@ -1,4 +1,8 @@
-// See LICENSE for license details.
+/**
+ * Description: This tests the store_tag and load_tag library functions, which use the
+ * stag and ltag instructions to store and load tags into/from memory.
+ *
+ */
 
 #include "env/tag.h"
 #include <stdio.h>
@@ -11,7 +15,7 @@ main() {
   long a[VECT_SIZE], i;
   
   for(i=0; i<VECT_SIZE; i++) {
-    *(a+i) = rand();
+    *(a+i) = rand() % (1 << TAG_WIDTH);
     store_tag((a+i), *(a+i));
   }
   
